@@ -3,76 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monitor de Energía Solar</title>
+    <title>Dashboard Energía Solar</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <h1><i class="fas fa-solar-panel"></i> Monitor de Energía Solar</h1>
+    <div class="dashboard-container">
+        <!-- Header compacto -->
+        <header class="dashboard-header">
+            <div class="header-left">
+                <h1><i class="fas fa-solar-panel"></i> Vivienda nº 34</h1>
+                <div class="live-indicator">
+                    <div class="pulse-dot"></div>
+                    <span>EN VIVO</span>
+                </div>
+            </div>
             <div id="connection-status" class="connection-status">
                 <i class="fas fa-wifi"></i> Desconectado
             </div>
         </header>
 
-        <div class="energy-overview">
-            <div class="total-power">
-                <h2>Potencia Total</h2>
-                <span id="total-power">0 W</span>
-                <div class="power-type" id="power-type">
-                    <i class="fas fa-plug"></i> Consumo
-                </div>
-            </div>
-        </div>
-
-        <div class="phases-container">
-            <h2>Potencia por Fases</h2>
-            <div class="power-display">
-                <div class="phase" data-phase="0">
-                    <h3><i class="fas fa-bolt"></i> Fase 1</h3>
-                    <div class="power-value">
-                        <span id="fase0">0 W</span>
-                        <div class="power-indicator" id="indicator-0"></div>
+        <!-- Layout principal del dashboard -->
+        <div class="dashboard-grid">
+            <!-- Panel de Fases - Superior izquierdo -->
+            <section class="phases-panel">
+                <h3 class="section-title">
+                    <i class="fas fa-bolt"></i> Fases Eléctricas
+                </h3>
+                <div class="phases-grid">
+                    <div class="phase-card" data-phase="0">
+                        <div class="phase-info">
+                            <div class="phase-header">
+                                <span class="phase-label">Fase 0</span>
+                                <div class="power-indicator" id="indicator-0"></div>
+                            </div>
+                            <div class="phase-status" id="status-0">Calculando...</div>
+                        </div>
+                        <div class="phase-value" id="fase0">0 W</div>
+                    </div>
+                    <div class="phase-card" data-phase="1">
+                        <div class="phase-info">
+                            <div class="phase-header">
+                                <span class="phase-label">Fase 1</span>
+                                <div class="power-indicator" id="indicator-1"></div>
+                            </div>
+                            <div class="phase-status" id="status-1">Calculando...</div>
+                        </div>
+                        <div class="phase-value" id="fase1">0 W</div>
+                    </div>
+                    <div class="phase-card" data-phase="2">
+                        <div class="phase-info">
+                            <div class="phase-header">
+                                <span class="phase-label">Fase 2</span>
+                                <div class="power-indicator" id="indicator-2"></div>
+                            </div>
+                            <div class="phase-status" id="status-2">Calculando...</div>
+                        </div>
+                        <div class="phase-value" id="fase2">0 W</div>
                     </div>
                 </div>
-                <div class="phase" data-phase="1">
-                    <h3><i class="fas fa-bolt"></i> Fase 2</h3>
-                    <div class="power-value">
-                        <span id="fase1">0 W</span>
-                        <div class="power-indicator" id="indicator-1"></div>
-                    </div>
-                </div>
-                <div class="phase" data-phase="2">
-                    <h3><i class="fas fa-bolt"></i> Fase 3</h3>
-                    <div class="power-value">
-                        <span id="fase2">0 W</span>
-                        <div class="power-indicator" id="indicator-2"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
+            </section>
 
-        <div class="chart-container">
-            <h2>Gráfica en Tiempo Real</h2>
-            <canvas id="powerChart" width="800" height="400"></canvas>
-        </div>
+            <!-- Aparatos - Columna derecha completa -->
+            <section class="appliances-panel">
+                <h3 class="section-title">
+                    <i class="fas fa-lightbulb"></i> Aparatos
+                    <span class="solar-available">
+                        Disponible: <span id="available-solar-power">0 W</span>
+                    </span>
+                </h3>
+                <div class="appliances-compact" id="appliances-grid">
+                    <!-- Los aparatos se generarán dinámicamente -->
+                </div>
+            </section>
 
-        <div class="stats-container">
-            <div class="stat-card">
-                <h3><i class="fas fa-sun"></i> Energía Solar</h3>
-                <span id="solar-power">0 W</span>
-            </div>
-            <div class="stat-card">
-                <h3><i class="fas fa-home"></i> Consumo Casa</h3>
-                <span id="house-consumption">0 W</span>
-            </div>
-            <div class="stat-card">
-                <h3><i class="fas fa-leaf"></i> CO₂ Ahorrado</h3>
-                <span id="co2-saved">0 kg</span>
-            </div>
+            <!-- Gráfica en tiempo real - Inferior izquierdo -->
+            <section class="chart-panel">
+                <h3 class="section-title">
+                    <i class="fas fa-chart-line"></i> Monitoreo en Tiempo Real
+                </h3>
+                <div class="chart-wrapper">
+                    <canvas id="powerChart"></canvas>
+                </div>
+            </section>
         </div>
     </div>
+
+    <!-- Librería Chart.js para gráficas -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Librería Socket.IO para WebSockets -->
+    <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
+    
+    <!-- Incluir nuestro script dashboard -->
+    <script src="dashboard.js"></script>
+</body>
+</html>
 
     <!-- Librería Chart.js para gráficas -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

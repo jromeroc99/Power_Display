@@ -45,8 +45,8 @@ let powerData = {
 
 // Eventos MQTT
 client.on("connect", () => {
-    console.log("✅ Backend conectado al broker MQTT");
-    console.log(" ");
+    // console.log("Backend conectado al broker MQTT");
+    // console.log(" ");
     
     // Suscripciones
     client.subscribe(topicFase0);
@@ -69,33 +69,33 @@ client.on("message", (topic, message) => {
         updatedData.fase2 = powerData.fase2;
     }
 
-    console.log(`📊 Valores actuales: Fase 0: ${powerData.fase0} W, Fase 1: ${powerData.fase1} W, Fase 2: ${powerData.fase2} W`);
+    // console.log(`Valores actuales: Fase 0: ${powerData.fase0} W, Fase 1: ${powerData.fase1} W, Fase 2: ${powerData.fase2} W`);
     
     // Enviar datos a todos los clientes WebSocket conectados
     io.emit('powerData', updatedData);
 });
 
 client.on("error", (err) => {
-    console.error("❌ Error MQTT:", err);
+    // console.error("Error MQTT:", err);
 });
 
 client.on("close", () => {
-    console.log("🔌 Conexión MQTT cerrada");
+    // console.log("Conexión MQTT cerrada");
 });
 
 client.on("reconnect", () => {
-    console.log("🔄 Reconectando a MQTT...");
+    // console.log("Reconectando a MQTT...");
 });
 
 // Eventos Socket.IO
 io.on('connection', (socket) => {
-    console.log(`🔌 Cliente conectado: ${socket.id}`);
+    // console.log(`Cliente conectado: ${socket.id}`);
     
     // Enviar datos actuales al cliente recién conectado
     socket.emit('powerData', powerData);
     
     socket.on('disconnect', () => {
-        console.log(`🔌 Cliente desconectado: ${socket.id}`);
+        // console.log(`Cliente desconectado: ${socket.id}`);
     });
 });
 
@@ -107,15 +107,15 @@ app.get('/', (req, res) => {
 // Iniciar servidor
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
-    console.log(`🚀 Servidor ejecutándose en http://localhost:${PORT}`);
+    // console.log(`Servidor ejecutándose en http://localhost:${PORT}`);
 });
 
 // Manejo de errores del servidor
 process.on('SIGINT', () => {
-    console.log('\n🛑 Cerrando servidor...');
+    // console.log('\nCerrando servidor...');
     client.end();
     server.close(() => {
-        console.log('✅ Servidor cerrado correctamente');
+        // console.log('Servidor cerrado correctamente');
         process.exit(0);
     });
 });
