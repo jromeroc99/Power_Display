@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitor de potencia</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Monitor de Potencia</h1>
+        <div class="power-display">
+            <div class="phase">
+                <h3>Fase 0</h3>
+                <span id="fase0">0 W</span>
+            </div>
+            <div class="phase">
+                <h3>Fase 1</h3>
+                <span id="fase1">0 W</span>
+            </div>
+            <div class="phase">
+                <h3>Fase 2</h3>
+                <span id="fase2">0 W</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Indicador de estado de conexión -->
+    <div id="connection-status" class="connection-status">
+        Desconectado
+    </div>
+
+    <!-- Librería Socket.IO para WebSockets -->
+    <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
+    
+    <!-- Incluir nuestro script dashboard -->
+    <script src="dashboard.js"></script>
+</body>
+</html>
