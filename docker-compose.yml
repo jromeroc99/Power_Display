@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  # Aplicación Power Display
+  power-display:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: power-display-app
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      # Variables MQTT - se deben configurar en el archivo .env
+      - MQTT_URL=${MQTT_URL}
+      - MQTT_USERNAME=${MQTT_USERNAME}
+      - MQTT_PASSWORD=${MQTT_PASSWORD}
+    volumes:
+      # Montar logs si se necesita persistencia
+      - ./logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
