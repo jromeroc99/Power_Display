@@ -32,7 +32,7 @@ const appliances = {
 };
 
 // Configuración del cliente WebSocket para conectarse al backend
-const BACKEND_URL = 'http://localhost:3000';
+const BACKEND_URL = 'http://ryzen:3000';
 const socket = io(BACKEND_URL);
 
 // Variables para la gráfica
