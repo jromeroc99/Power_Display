@@ -3,33 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monitor de potencia</title>
+    <title>Monitor de Energía Solar</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container">
-        <h1>Monitor de Potencia</h1>
-        <div class="power-display">
-            <div class="phase">
-                <h3>Fase 0</h3>
-                <span id="fase0">0 W</span>
+        <header class="header">
+            <h1><i class="fas fa-solar-panel"></i> Monitor de Energía Solar</h1>
+            <div id="connection-status" class="connection-status">
+                <i class="fas fa-wifi"></i> Desconectado
             </div>
-            <div class="phase">
-                <h3>Fase 1</h3>
-                <span id="fase1">0 W</span>
+        </header>
+
+        <div class="energy-overview">
+            <div class="total-power">
+                <h2>Potencia Total</h2>
+                <span id="total-power">0 W</span>
+                <div class="power-type" id="power-type">
+                    <i class="fas fa-plug"></i> Consumo
+                </div>
             </div>
-            <div class="phase">
-                <h3>Fase 2</h3>
-                <span id="fase2">0 W</span>
+        </div>
+
+        <div class="phases-container">
+            <h2>Potencia por Fases</h2>
+            <div class="power-display">
+                <div class="phase" data-phase="0">
+                    <h3><i class="fas fa-bolt"></i> Fase 1</h3>
+                    <div class="power-value">
+                        <span id="fase0">0 W</span>
+                        <div class="power-indicator" id="indicator-0"></div>
+                    </div>
+                </div>
+                <div class="phase" data-phase="1">
+                    <h3><i class="fas fa-bolt"></i> Fase 2</h3>
+                    <div class="power-value">
+                        <span id="fase1">0 W</span>
+                        <div class="power-indicator" id="indicator-1"></div>
+                    </div>
+                </div>
+                <div class="phase" data-phase="2">
+                    <h3><i class="fas fa-bolt"></i> Fase 3</h3>
+                    <div class="power-value">
+                        <span id="fase2">0 W</span>
+                        <div class="power-indicator" id="indicator-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h2>Gráfica en Tiempo Real</h2>
+            <canvas id="powerChart" width="800" height="400"></canvas>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-card">
+                <h3><i class="fas fa-sun"></i> Energía Solar</h3>
+                <span id="solar-power">0 W</span>
+            </div>
+            <div class="stat-card">
+                <h3><i class="fas fa-home"></i> Consumo Casa</h3>
+                <span id="house-consumption">0 W</span>
+            </div>
+            <div class="stat-card">
+                <h3><i class="fas fa-leaf"></i> CO₂ Ahorrado</h3>
+                <span id="co2-saved">0 kg</span>
             </div>
         </div>
     </div>
 
-    <!-- Indicador de estado de conexión -->
-    <div id="connection-status" class="connection-status">
-        Desconectado
-    </div>
-
+    <!-- Librería Chart.js para gráficas -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Librería Socket.IO para WebSockets -->
     <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
     
