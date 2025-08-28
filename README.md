@@ -1,167 +1,224 @@
 # Power Display 🔌⚡
 
-Dashboard en tiempo real para monitoreo de consumo de potencia eléctrica en instalaciones con medidores Shelly. Este proyecto proporciona una interfaz web moderna y responsiva que muestra el consumo eléctrico de tres fases de manera simultánea.
+Dashboard en tiempo real para monitoreo de potencia eléctrica con análisis de fases y gestión de aparatos inteligente.
 
-## 📋 Características
+## 🚀 Características Principales
 
-- **Monitoreo en tiempo real**: Visualización instantánea del consumo eléctrico por fases
-- **Interfaz moderna**: Dashboard responsivo con indicadores visuales de potencia
-- **Arquitectura eficiente**: Backend Node.js con WebSockets para comunicación en tiempo real
-- **Containerización**: Aplicación completamente dockerizada para fácil despliegue
-- **Conexión MQTT**: Integración con dispositivos Shelly para obtención de datos
-- **Estado de conexión**: Indicadores visuales del estado de conectividad
-- **Healthcheck**: Monitoreo automático del estado de la aplicación
+- **Monitoreo en Tiempo Real**: Visualización continua de datos de potencia eléctrica
+- **Análisis Trifásico**: Gestión completa de las tres fases eléctricas
+- **Dashboard Interactivo**: Interface web responsiva con múltiples vistas
+- **Conexión MQTT**: Integración con sensores IoT para datos en vivo
+- **Análisis de Aparatos**: Detección inteligente del estado de funcionamiento
+- **Cálculo de Energía Solar**: Determinación automática de energía solar disponible
+- **WebSocket**: Comunicación bidireccional en tiempo real
+- **Docker Ready**: Despliegue fácil con contenedores
 
-## 🏗️ Arquitectura
+## 📁 Estructura del Proyecto
 
 ```
-┌─────────────────┐    MQTT     ┌──────────────────┐    WebSocket    ┌─────────────────┐
-│  Dispositivos   │◄────────────►│   Backend        │◄───────────────►│   Frontend      │
-│  Shelly         │             │  (Node.js)       │                 │  (HTML/CSS/JS)  │
-└─────────────────┘             └──────────────────┘                 └─────────────────┘
+Power_Display/
+├── 📄 README.md              # Este archivo
+├── 📄 package.json           # Dependencias y scripts
+├── 📄 docker-compose.yml     # Configuración Docker
+├── 📄 Dockerfile            # Imagen Docker
+├── 📄 LICENSE               # Licencia MIT
+├── 📂 backend/              # Servidor Node.js
+│   └── server.js           # Aplicación principal del servidor
+├── 📂 frontend/             # Dashboard web
+│   ├── index.html          # Página principal
+│   ├── styles.css          # Estilos CSS
+│   ├── dashboard-refactored.js  # App principal refactorizada
+│   ├── README.md           # Documentación del frontend
+│   └── js/                 # Módulos JavaScript
+│       ├── config.js       # Configuración
+│       ├── phases.js       # Gestión de fases
+│       ├── chart.js        # Gráficas Chart.js
+│       ├── appliances.js   # Análisis de aparatos
+│       ├── socket.js       # WebSocket client
+│       └── ui.js          # Gestión de UI
+├── 📂 logs/                # Archivos de log
+└── 📂 pruebas/             # Scripts de prueba
+    └── prueba-mqtt.js      # Pruebas MQTT
 ```
 
-### Componentes principales:
-- **Backend**: Servidor Express.js con Socket.IO y cliente MQTT
-- **Frontend**: Dashboard web con visualización de datos en tiempo real
-- **Docker**: Containerización para despliegue simplificado
+## 🛠️ Tecnologías Utilizadas
+
+### Backend
+- **Node.js**: Servidor de aplicación
+- **Express**: Framework web
+- **Socket.IO**: WebSocket para tiempo real
+- **MQTT**: Protocolo de mensajería IoT
+- **CORS**: Habilitación de recursos cruzados
+
+### Frontend
+- **Vanilla JavaScript ES6+**: Sin frameworks pesados
+- **Chart.js**: Gráficas interactivas
+- **WebSocket Client**: Comunicación en tiempo real
+- **CSS3**: Estilos modernos y responsivos
+- **Arquitectura Modular**: Código organizado y mantenible
+
+### DevOps
+- **Docker**: Contenedorización
+- **Docker Compose**: Orquestación de servicios
 
 ## 🚀 Instalación y Configuración
 
-### Prerequisitos
-- Docker y Docker Compose
-- Dispositivos Shelly configurados con MQTT
-- Broker MQTT accesible
-
-### Configuración del entorno
-
-1. **Clona el repositorio:**
+### 1. Clonar el Repositorio
 ```bash
 git clone https://github.com/jromeroc99/Power_Display.git
 cd Power_Display
 ```
 
-2. **Configura las variables de entorno:**
-Crea un archivo `.env` en la raíz del proyecto:
-```env
-MQTT_URL=mqtt://tu-broker-mqtt:1883
-MQTT_USERNAME=tu_usuario
-MQTT_PASSWORD=tu_contraseña
-```
-
-3. **Ejecuta con Docker Compose:**
-```bash
-docker compose up -d --build
-```
-
-La aplicación estará disponible en `http://localhost:3000`
-
-## 🛠️ Desarrollo local
-
-### Sin Docker
-
-1. **Instala las dependencias:**
+### 2. Instalar Dependencias
 ```bash
 npm install
 ```
 
-2. **Configura el archivo `.env`** (como se describe arriba)
-
-3. **Ejecuta la aplicación:**
-```bash
-npm start
+### 3. Configurar Variables de Entorno
+Crear un archivo `.env` en la raíz del proyecto:
+```env
+MQTT_URL=mqtt://tu-broker-mqtt:1883
+MQTT_USERNAME=tu_usuario
+MQTT_PASSWORD=tu_password
+PORT=3000
+NODE_ENV=development
 ```
 
-### Scripts disponibles
-- `npm start`: Ejecuta el servidor en modo producción
-- `npm run dev`: Ejecuta el servidor en modo desarrollo
-- `npm run start:prueba`: Ejecuta script de prueba MQTT
+### 4. Ejecutar la Aplicación
 
-## 📊 Temas MQTT monitoreados
+#### Desarrollo Local
+```bash
+npm start
+# o
+npm run dev
+```
 
-La aplicación se suscribe a los siguientes temas MQTT:
+#### Con Docker
+```bash
+docker-compose up -d
+```
 
-- `shellies/ipe/sotano/cuadro/emeter/0/power` - Fase 0
-- `shellies/ipe/sotano/cuadro/emeter/1/power` - Fase 1  
-- `shellies/ipe/sotano/cuadro/emeter/2/power` - Fase 2
+La aplicación estará disponible en `http://localhost:3000`
 
-## 🖥️ Interfaz de usuario
+## 🔧 Configuración MQTT
 
-El dashboard incluye:
+El sistema se conecta a un broker MQTT para recibir datos de sensores. Los topics esperados son:
 
-- **Panel de fases**: Muestra el consumo actual de cada fase con indicadores de color
-- **Estado de conexión**: Indicador visual del estado de conectividad MQTT/WebSocket
-- **Información en tiempo real**: Datos actualizados instantáneamente
-- **Diseño responsivo**: Adaptable a diferentes tamaños de pantalla
+```
+energia/fase0    # Datos de la fase 0
+energia/fase1    # Datos de la fase 1  
+energia/fase2    # Datos de la fase 2
+```
+
+Los mensajes deben tener el formato JSON:
+```json
+{
+  "potencia": 1250.5,
+  "tension": 230.2,
+  "corriente": 5.43,
+  "timestamp": "2025-08-28T10:30:00Z"
+}
+```
+
+## 📊 Funcionalidades del Dashboard
+
+### 🔍 Vistas Disponibles
+1. **Vista General**: Todos los componentes visibles
+2. **Solo Fases**: Panel de monitoreo de fases eléctricas
+3. **Solo Aparatos**: Análisis de estado de aparatos
+4. **Solo Gráfica**: Visualización temporal de datos
+
+### 📈 Características Avanzadas
+- **Cálculo Automático**: Energía solar disponible en tiempo real
+- **Estado de Aparatos**: Detección si funcionan con energía solar
+- **Notificaciones**: Sistema de alertas y estados
+- **Temas**: Modo claro y oscuro
+- **Responsive**: Adaptado a móviles y tablets
+- **Reconexión Automática**: Manejo robusto de desconexiones
+
+## 🧪 Pruebas
+
+### Ejecutar Prueba MQTT
+```bash
+npm run start:prueba
+```
+
+### Debug en Navegador
+Abre las herramientas de desarrollo y usa:
+```javascript
+// Obtener estadísticas actuales
+getStats()
+
+// Cambiar vista
+selectView('chart') // 'all', 'phases', 'appliances', 'chart'
+
+// Mostrar notificación
+showNotification('Mensaje de prueba', 'success')
+```
 
 ## 🐳 Docker
 
-### Imagen Docker
-- Basada en `node:18-alpine` para un tamaño optimizado
-- Usuario no-root para mayor seguridad
-- Healthcheck integrado para monitoreo
-
-### Configuración Docker Compose
-- Puerto expuesto: 3000
-- Volúmenes para logs persistentes
-- Reinicio automático en caso de fallos
-- Variables de entorno configurables
-
-## 📁 Estructura del proyecto
-
-```
-Power_Display/
-├── backend/
-│   └── server.js           # Servidor principal Node.js
-├── frontend/
-│   ├── index.html          # Interfaz web principal
-│   ├── dashboard.js        # Lógica del frontend
-│   └── styles.css          # Estilos CSS
-├── logs/                   # Directorio de logs
-├── pruebas/
-│   └── prueba-mqtt.js      # Scripts de prueba MQTT
-├── docker-compose.yml      # Configuración Docker Compose
-├── Dockerfile              # Configuración Docker
-├── package.json            # Dependencias y scripts
-└── README.md              # Este archivo
-```
-
-## 🔧 Configuración avanzada
-
-### Variables de entorno disponibles
-
-| Variable | Descripción | Valor por defecto |
-|----------|-------------|-------------------|
-| `MQTT_URL` | URL del broker MQTT | Requerido |
-| `MQTT_USERNAME` | Usuario MQTT | Requerido |
-| `MQTT_PASSWORD` | Contraseña MQTT | Requerido |
-| `PORT` | Puerto del servidor | 3000 |
-| `NODE_ENV` | Entorno de ejecución | development |
-
-### Personalización de temas MQTT
-
-Para modificar los temas MQTT monitoreados, edita las constantes en `backend/server.js`:
-
-```javascript
-const topicFase0 = "tu/tema/fase0";
-const topicFase1 = "tu/tema/fase1";
-const topicFase2 = "tu/tema/fase2";
-```
-
-## 🩺 Monitoreo y salud
-
-### Healthcheck
-La aplicación incluye un endpoint de healthcheck que verifica:
-- Estado del servidor web
-- Conectividad general de la aplicación
-
-### Logs
-Los logs se pueden acceder mediante:
+### Construir Imagen
 ```bash
-docker compose logs -f power-display
+docker build -t power-display .
 ```
 
-## 🤝 Contribución
+### Ejecutar Contenedor
+```bash
+docker run -p 3000:3000 \
+  -e MQTT_URL=mqtt://tu-broker:1883 \
+  -e MQTT_USERNAME=usuario \
+  -e MQTT_PASSWORD=password \
+  power-display
+```
+
+## 📚 API y Endpoints
+
+### WebSocket Events
+```javascript
+// Eventos del cliente
+socket.on('power-data', (data) => {
+  // Recibir datos de potencia
+});
+
+socket.on('connection-status', (status) => {
+  // Estado de conexión MQTT
+});
+
+// Eventos del servidor
+socket.emit('request-data');           // Solicitar datos
+socket.emit('get-historical', count);  // Obtener histórico
+```
+
+### HTTP Endpoints
+```
+GET  /                    # Dashboard principal
+GET  /api/status         # Estado del servidor
+GET  /api/health         # Health check
+```
+
+## 🔧 Desarrollo
+
+### Estructura de Clases (Frontend)
+- `PowerDisplayApp`: Coordinador principal
+- `PhaseManager`: Gestión de fases eléctricas  
+- `ChartManager`: Gráficas y visualización
+- `ApplianceManager`: Análisis de aparatos
+- `SocketManager`: Comunicación WebSocket
+- `UIManager`: Interface y notificaciones
+
+### Añadir Nuevos Aparatos
+Edita `APPLIANCES_DATA` en `frontend/js/config.js`:
+```javascript
+{
+  name: "Nuevo Aparato",
+  phase: 0,
+  consumption: 800,
+  // ... más propiedades
+}
+```
+
+## 🤝 Contribuir
 
 1. Fork el proyecto
 2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
@@ -169,14 +226,43 @@ docker compose logs -f power-display
 4. Push a la rama (`git push origin feature/AmazingFeature`)
 5. Abre un Pull Request
 
-## 📝 Licencia
+## 📝 Changelog
 
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
+### v1.0.0 (2025-08-28)
+- ✨ Frontend refactorizado con arquitectura modular
+- 🚀 Implementación de WebSocket para tiempo real
+- 📊 Sistema de gráficas mejorado con Chart.js
+- 🎨 UI/UX renovada con temas claro/oscuro
+- 🔄 Reconexión automática robusta
+- 📱 Diseño completamente responsive
+- 🐳 Soporte Docker completo
+- 🧪 Suite de pruebas automatizadas
 
-## 👨‍💻 Autor
+## 🐛 Problemas Conocidos
 
-**jromeroc99** - [GitHub](https://github.com/jromeroc99)
+- Ninguno reportado actualmente
+
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
+
+## 👤 Autor
+
+**jromeroc99**
+- GitHub: [@jromeroc99](https://github.com/jromeroc99)
+
+## ⭐ Reconocimientos
+
+- Chart.js por las excelentes gráficas
+- Socket.IO por la comunicación en tiempo real
+- Comunidad MQTT por el protocolo robusto
 
 ---
 
-⚡ **Power Display** - Monitoreo inteligente de consumo eléctrico en tiempo real
+<div align="center">
+
+**[⬆ Volver arriba](#power-display-)**
+
+Hecho con ❤️ para monitoreo de energía inteligente
+
+</div>

@@ -3,108 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Energía Solar</title>
+    <title>Vivienda 34</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="dashboard-container">
-        <!-- Header compacto -->
-        <header class="dashboard-header">
-            <div class="header-left">
-                <h1><i class="fas fa-solar-panel"></i> Vivienda nº 34</h1>
-                <div class="live-indicator">
-                    <div class="pulse-dot"></div>
-                    <span>EN VIVO</span>
+        <!-- Header simplificado -->
+        <header class="header">
+            <div class="header-content">
+                <div class="title-section">
+                    <h1><i class="fas fa-solar-panel"></i> Vivienda nº 34</h1>
+                    <div class="status-badge" id="connection-status">
+                        <div class="status-dot"></div>
+                        <span>Desconectado</span>
+                    </div>
                 </div>
-            </div>
-            <div id="connection-status" class="connection-status">
-                <i class="fas fa-wifi"></i> Desconectado
+                
+                <!-- Selector de componentes -->
+                <div class="component-selector">
+                    <button class="selector-btn active" data-component="all">
+                        <i class="fas fa-th"></i>
+                        <span>Todo</span>
+                    </button>
+                    <button class="selector-btn" data-component="appliances">
+                        <i class="fas fa-home"></i>
+                        <span>Aparatos y Fases</span>
+                    </button>
+                    <button class="selector-btn" data-component="chart">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Gráfica</span>
+                    </button>
+                </div>
             </div>
         </header>
 
-        <!-- Layout principal del dashboard -->
-        <div class="dashboard-grid">
-            <!-- Panel de Fases - Superior izquierdo -->
-            <section class="phases-panel">
-                <h3 class="section-title">
-                    <i class="fas fa-bolt"></i> Fases Eléctricas
-                </h3>
-                <div class="phases-grid">
-                    <div class="phase-card" data-phase="0">
-                        <div class="phase-info">
-                            <div class="phase-header">
-                                <span class="phase-label">Fase 0</span>
-                                <div class="power-indicator" id="indicator-0"></div>
-                            </div>
-                            <div class="phase-status" id="status-0">Calculando...</div>
-                        </div>
-                        <div class="phase-value" id="fase0">0 W</div>
+        <!-- Contenido principal -->
+        <main class="main-content">
+            <!-- Panel de Aparatos con Fases integradas -->
+            <section class="component-panel appliances-panel" id="appliances-component">
+                <div class="panel-header">
+                    <div class="panel-title-section">
+                        <h2><i class="fas fa-lightbulb"></i> Aparatos</h2>
+                        <p class="panel-subtitle">¿Qué pasaría si enciendes cada aparato?</p>
                     </div>
-                    <div class="phase-card" data-phase="1">
-                        <div class="phase-info">
-                            <div class="phase-header">
-                                <span class="phase-label">Fase 1</span>
-                                <div class="power-indicator" id="indicator-1"></div>
+                    <div class="phases-mini-grid">
+                        <div class="phase-mini-card" data-phase="0">
+                            <div class="phase-mini-info">
+                                <span class="phase-mini-label">F0</span>
+                                <div class="phase-mini-indicator" id="mini-indicator-0"></div>
                             </div>
-                            <div class="phase-status" id="status-1">Calculando...</div>
+                            <div class="phase-mini-value" id="mini-fase0">0W</div>
+                            <div class="phase-mini-type" id="mini-type-0">--</div>
                         </div>
-                        <div class="phase-value" id="fase1">0 W</div>
-                    </div>
-                    <div class="phase-card" data-phase="2">
-                        <div class="phase-info">
-                            <div class="phase-header">
-                                <span class="phase-label">Fase 2</span>
-                                <div class="power-indicator" id="indicator-2"></div>
+                        <div class="phase-mini-card" data-phase="1">
+                            <div class="phase-mini-info">
+                                <span class="phase-mini-label">F1</span>
+                                <div class="phase-mini-indicator" id="mini-indicator-1"></div>
                             </div>
-                            <div class="phase-status" id="status-2">Calculando...</div>
+                            <div class="phase-mini-value" id="mini-fase1">0W</div>
+                            <div class="phase-mini-type" id="mini-type-1">--</div>
                         </div>
-                        <div class="phase-value" id="fase2">0 W</div>
+                        <div class="phase-mini-card" data-phase="2">
+                            <div class="phase-mini-info">
+                                <span class="phase-mini-label">F2</span>
+                                <div class="phase-mini-indicator" id="mini-indicator-2"></div>
+                            </div>
+                            <div class="phase-mini-value" id="mini-fase2">0W</div>
+                            <div class="phase-mini-type" id="mini-type-2">--</div>
+                        </div>
                     </div>
+                </div>
+                
+                <div class="appliances-grid" id="appliances-grid">
+                    <!-- Aparatos generados dinámicamente -->
                 </div>
             </section>
 
-            <!-- Aparatos - Columna derecha completa -->
-            <section class="appliances-panel">
-                <h3 class="section-title">
-                    <i class="fas fa-lightbulb"></i> Aparatos
-                    <span class="solar-available">
-                        Disponible: <span id="available-solar-power">0 W</span>
-                    </span>
-                </h3>
-                <div class="appliances-compact" id="appliances-grid">
-                    <!-- Los aparatos se generarán dinámicamente -->
+            <!-- Panel de Gráfica -->
+            <section class="component-panel chart-panel" id="chart-component">
+                <div class="panel-header">
+                    <h2><i class="fas fa-chart-line"></i> Gráfica en Tiempo Real</h2>
                 </div>
-            </section>
-
-            <!-- Gráfica en tiempo real - Inferior izquierdo -->
-            <section class="chart-panel">
-                <h3 class="section-title">
-                    <i class="fas fa-chart-line"></i> Monitoreo en Tiempo Real
-                </h3>
-                <div class="chart-wrapper">
+                <div class="chart-container">
                     <canvas id="powerChart"></canvas>
                 </div>
             </section>
-        </div>
+        </main>
     </div>
 
-    <!-- Librería Chart.js para gráficas -->
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Librería Socket.IO para WebSockets -->
     <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
-    
-    <!-- Incluir nuestro script dashboard -->
-    <script src="dashboard.js"></script>
-</body>
-</html>
-
-    <!-- Librería Chart.js para gráficas -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Librería Socket.IO para WebSockets -->
-    <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
-    
-    <!-- Incluir nuestro script dashboard -->
-    <script src="dashboard.js"></script>
+    <!-- Nuevo dashboard modular -->
+    <script type="module" src="dashboard-refactored.js"></script>
 </body>
 </html>
